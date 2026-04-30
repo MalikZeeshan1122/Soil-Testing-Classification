@@ -56,7 +56,11 @@ def main():
     )
 
     print("\nStarting Streamlit app...")
-    run_cmd([sys.executable, "-m", "streamlit", "run", str(APP_SCRIPT)])
+    print("Tip: first launch may take a few seconds. Use Ctrl+C to stop the app.")
+    try:
+        run_cmd([sys.executable, "-m", "streamlit", "run", str(APP_SCRIPT)])
+    except KeyboardInterrupt:
+        print("\nStreamlit app stopped by user.")
 
 
 if __name__ == "__main__":
