@@ -80,6 +80,14 @@ python predict_rf.py --Temparature 30 --Humidity 55 --Moisture 45 --Crop_Type "G
 streamlit run app.py
 ```
 
+4. Benchmark multiple models (recommended for improvement)
+
+```bash
+python benchmark_models.py --sample-size 40000
+```
+
+This saves `outputs/model_benchmark.json` with Accuracy, Macro F1, and train time.
+
 ## 5) What Each Script Does
 
 ### `train_rf.py`
