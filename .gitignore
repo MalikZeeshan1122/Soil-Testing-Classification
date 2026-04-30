@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Generated outputs
+outputs/
+
+# Model artifacts (regenerate with train_rf.py)
+soil_rf_model.joblib
+soil_label_encoder.joblib
