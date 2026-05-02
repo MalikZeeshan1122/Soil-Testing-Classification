@@ -20,7 +20,9 @@ REQUIRED_COLUMNS = [
     "Nitrogen",
     "Potassium",
     "Phosphorous",
+    "Fertilizer Name",
     "ph",
+    "Soil_pH_Type",
 ]
 
 
@@ -138,21 +140,23 @@ def explain_prediction_block(input_df, confidence_df):
     dists = np.sqrt(((cand_scaled - input_vec) ** 2).sum(axis=1))
     nearest = candidate_df.assign(distance=dists).sort_values("distance").head(5)
     st.write("Most similar training examples (nearest profiles)")
+    nearest_cols = [
+        "Soil Type",
+        "Temparature",
+        "Humidity",
+        "Moisture",
+        "Crop Type",
+        "Fertilizer Name",
+        "Nitrogen",
+        "Potassium",
+        "Phosphorous",
+        "ph",
+        "Soil_pH_Type",
+        "distance",
+    ]
+    nearest_cols = [c for c in nearest_cols if c in nearest.columns]
     st.dataframe(
-        nearest[
-            [
-                "Soil Type",
-                "Temparature",
-                "Humidity",
-                "Moisture",
-                "Crop Type",
-                "Nitrogen",
-                "Potassium",
-                "Phosphorous",
-                "ph",
-                "distance",
-            ]
-        ],
+        nearest[nearest_cols],
         use_container_width=True,
         hide_index=True,
     )
@@ -168,11 +172,13 @@ def single_prediction_ui(model, encoder):
         humidity = st.number_input("Humidity", min_value=0.0, max_value=100.0, value=55.0)
         moisture = st.number_input("Moisture", min_value=0.0, max_value=100.0, value=45.0)
         crop_type = st.text_input("Crop Type", value="Ground Nuts")
+        fertilizer_name = st.text_input("Fertilizer Name", value="Ammonium Phosphate Complex")
     with col2:
         nitrogen = st.number_input("Nitrogen", min_value=0.0, max_value=200.0, value=8.0)
         potassium = st.number_input("Potassium", min_value=0.0, max_value=200.0, value=4.0)
         phosphorous = st.number_input("Phosphorous", min_value=0.0, max_value=200.0, value=18.0)
         ph = st.number_input("ph", min_value=0.0, max_value=14.0, value=7.2)
+        soil_ph_type = st.text_input("Soil_pH_Type", value="Alkaline")
 
     if st.button("Predict Soil Type", type="primary"):
         input_df = pd.DataFrame(
@@ -186,6 +192,8 @@ def single_prediction_ui(model, encoder):
                     "Potassium": potassium,
                     "Phosphorous": phosphorous,
                     "ph": ph,
+                    "Fertilizer Name": fertilizer_name,
+                    "Soil_pH_Type": soil_ph_type,
                 }
             ]
         )
@@ -510,7 +518,7 @@ def main():
         st.header("Project Overview")
         st.write("Primary Model: Random Forest")
         st.write(f"Classes: {', '.join(encoder.classes_)}")
-        st.write("Features: Temparature, Humidity, Moisture, Crop Type, Nitrogen, Potassium, Phosphorous, ph")
+        st.write("Features: Temparature, Humidity, Moisture, Crop Type, Fertilizer Name, Nitrogen, Potassium, Phosphorous, ph, Soil_pH_Type")
 
     tab1, tab2, tab3 = st.tabs(["Single Prediction", "Batch Prediction", "Model Comparison"])
     with tab1:

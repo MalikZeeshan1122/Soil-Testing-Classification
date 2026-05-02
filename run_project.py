@@ -1,3 +1,4 @@
+import argparse
 import subprocess
 import sys
 from pathlib import Path
@@ -10,6 +11,7 @@ ENCODER_FILE = BASE_DIR / "soil_label_encoder.joblib"
 TRAIN_SCRIPT = BASE_DIR / "train_rf.py"
 PREDICT_SCRIPT = BASE_DIR / "predict_rf.py"
 APP_SCRIPT = BASE_DIR / "app.py"
+BENCHMARK_SCRIPT = BASE_DIR / "benchmark_models.py"
 
 
 def run_cmd(args):
@@ -18,7 +20,26 @@ def run_cmd(args):
         raise SystemExit(result.returncode)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="One-command flow: train (if needed) -> sample prediction -> optional benchmark -> Streamlit app."
+    )
+    parser.add_argument(
+        "--benchmark",
+        action="store_true",
+        help="Run benchmark_models.py on the full dataset before launching the app.",
+    )
+    parser.add_argument(
+        "--skip-app",
+        action="store_true",
+        help="Do not launch Streamlit at the end (useful for CI / scripted runs).",
+    )
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+
     if not DATA_FILE.exists():
         raise SystemExit(f"Dataset not found: {DATA_FILE}")
 
@@ -52,8 +73,23 @@ def main():
             "18",
             "--ph",
             "7.2",
+            "--Fertilizer_Name",
+            "Ammonium Phosphate Complex",
+            "--Soil_pH_Type",
+            "Alkaline",
         ]
     )
+
+    if args.benchmark:
+        if not BENCHMARK_SCRIPT.exists():
+            print("\nbenchmark_models.py not found. Skipping benchmark step.")
+        else:
+            print("\nRunning full-dataset benchmark (this may take several minutes)...")
+            run_cmd([sys.executable, str(BENCHMARK_SCRIPT), "--sample-size", "0"])
+
+    if args.skip_app:
+        print("\n--skip-app set. Not launching Streamlit.")
+        return
 
     print("\nStarting Streamlit app...")
     print("Tip: first launch may take a few seconds. Use Ctrl+C to stop the app.")

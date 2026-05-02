@@ -16,6 +16,18 @@ def parse_args():
     parser.add_argument("--Phosphorous", type=float, required=True)
     parser.add_argument("--ph", type=float, required=True)
     parser.add_argument(
+        "--Fertilizer_Name",
+        type=str,
+        required=True,
+        help='Matches CSV column "Fertilizer Name"',
+    )
+    parser.add_argument(
+        "--Soil_pH_Type",
+        type=str,
+        required=True,
+        help='Matches CSV column "Soil_pH_Type" (e.g. Acidic, Alkaline)',
+    )
+    parser.add_argument(
         "--model-path", default="soil_rf_model.joblib", help="Path to saved model file"
     )
     parser.add_argument(
@@ -43,6 +55,8 @@ def main():
                 "Potassium": args.Potassium,
                 "Phosphorous": args.Phosphorous,
                 "ph": args.ph,
+                "Fertilizer Name": args.Fertilizer_Name,
+                "Soil_pH_Type": args.Soil_pH_Type,
             }
         ]
     )
