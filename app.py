@@ -483,11 +483,11 @@ def model_comparison_ui(selected_models):
 
 
 def main():
-    st.set_page_config(page_title="Soil Type Classifier", page_icon="🌱", layout="wide")
+    st.set_page_config(page_title="Soil Testing Classification", page_icon="🌱", layout="wide")
     apply_custom_style()
-    st.markdown("<div class='main-title'>Soil Type Classification Dashboard</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-title'>Soil Testing Classification</div>", unsafe_allow_html=True)
     st.markdown(
-        "<div class='sub-title'>Interactive ML dashboard for soil type prediction with confidence and batch analytics.</div>",
+        "<div class='sub-title'>Interactive dashboard for soil type prediction: confidence scores, batch analytics, and model comparison.</div>",
         unsafe_allow_html=True,
     )
 
@@ -503,6 +503,8 @@ def main():
         return
 
     with st.sidebar:
+        st.markdown("**Soil Testing Classification**")
+        st.caption("Soil type prediction from measurements")
         st.header("Benchmarked Models")
         available_models = ["RandomForest", "ExtraTrees", "LogisticRegression", "LinearSVC"]
         selected_models = st.multiselect(
@@ -529,7 +531,9 @@ def main():
         model_comparison_ui(selected_models)
 
     st.markdown("---")
-    st.caption("Tip: Keep column names exactly as used in training, including 'Temparature'.")
+    st.caption(
+        "Soil Testing Classification — Tip: keep column names exactly as used in training, including 'Temparature'."
+    )
 
 
 if __name__ == "__main__":

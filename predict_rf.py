@@ -5,7 +5,7 @@ import joblib
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Predict Soil Type using a trained Random Forest model."
+        description="Soil Testing Classification: predict soil type with the trained Random Forest model."
     )
     parser.add_argument("--Temparature", type=float, required=True)
     parser.add_argument("--Humidity", type=float, required=True)

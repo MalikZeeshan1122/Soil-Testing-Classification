@@ -21,7 +21,9 @@ BENCHMARK_OUT = "outputs/model_benchmark.json"
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Benchmark multiple models for soil type classification.")
+    parser = argparse.ArgumentParser(
+        description="Soil Testing Classification: benchmark RandomForest, ExtraTrees, LogisticRegression, and LinearSVC."
+    )
     parser.add_argument(
         "--sample-size",
         type=int,

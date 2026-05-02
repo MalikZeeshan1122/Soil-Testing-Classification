@@ -1,6 +1,6 @@
 # Soil Testing Classification
 
-End-to-end machine learning project to classify soil type from soil and crop measurements using a Random Forest classifier.
+End-to-end **Soil Testing Classification** project: classify soil type from soil and crop measurements using a Random Forest classifier plus a Streamlit dashboard.
 
 ## 1) Project Goal
 
@@ -23,7 +23,7 @@ End-to-end machine learning project to classify soil type from soil and crop mea
 
 ```text
 Soil-Testing-Classification/
-├─ app.py                      # Streamlit web app (single + batch prediction)
+├─ app.py                      # Soil Testing Classification — Streamlit dashboard (single + batch prediction)
 ├─ train_rf.py                 # Train/evaluate model and save artifacts
 ├─ predict_rf.py               # Command-line prediction
 ├─ run_project.py              # One-command run flow
@@ -78,11 +78,13 @@ python train_rf.py
 python predict_rf.py --Temparature 30 --Humidity 55 --Moisture 45 --Crop_Type "Ground Nuts" --Nitrogen 8 --Potassium 4 --Phosphorous 18 --ph 7.2 --Fertilizer_Name "Ammonium Phosphate Complex" --Soil_pH_Type Alkaline
 ```
 
-3. Launch web app
+3. Launch **Soil Testing Classification** web app
 
 ```bash
 streamlit run app.py
 ```
+
+The browser tab title and header use the name **Soil Testing Classification**.
 
 4. Benchmark multiple models (recommended for improvement)
 
@@ -132,7 +134,7 @@ python run_project.py --benchmark --skip-app    # do not launch Streamlit at the
 - Accepts input from CLI arguments
 - Returns predicted soil type
 
-### `app.py`
+### `app.py` (**Soil Testing Classification** dashboard)
 - Single prediction form
 - Confidence scores per class
 - Batch CSV upload prediction

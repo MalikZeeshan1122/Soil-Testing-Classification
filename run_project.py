@@ -22,7 +22,7 @@ def run_cmd(args):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="One-command flow: train (if needed) -> sample prediction -> optional benchmark -> Streamlit app."
+        description="Soil Testing Classification — one-command flow: train (if needed) -> sample prediction -> optional benchmark -> Streamlit app."
     )
     parser.add_argument(
         "--benchmark",
